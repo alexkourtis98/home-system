@@ -71,7 +71,7 @@ router.post('/verify', (req, res) => {
 
   try {
     const jwt = require('jsonwebtoken');
-    const JWT_SECRET = process.env.JWT_SECRET || 'domikon-secret-key-2024';
+    const JWT_SECRET = process.env.JWT_SECRET || 'home-system-secret-key-2024';
     
     const decoded = jwt.verify(token, JWT_SECRET);
     

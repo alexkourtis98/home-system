@@ -319,7 +319,7 @@ const seedDatabase = async () => {
 if (require.main === module) {
   const connectDB = async () => {
     try {
-      const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/domikon';
+      const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/home-system';
       await mongoose.connect(mongoURI);
       console.log('Connected to MongoDB');
 

@@ -1,10 +1,10 @@
-# Contributing to Domikon
+# Contributing to Home System
 
-First off, thank you for considering contributing to Domikon! It's people like you that make Domikon such a great tool.
+First off, thank you for considering contributing to Home System! It's people like you that make Home System such a great tool.
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Domikon Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+This project and everyone participating in it is governed by the [Home System Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## How Can I Contribute?
 
