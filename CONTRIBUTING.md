@@ -1,10 +1,10 @@
-# Contributing to Home System
+# Contributing to HomeSystem
 
-First off, thank you for considering contributing to Home System! It's people like you that make Home System such a great tool.
+First off, thank you for considering contributing to HomeSystem! It's people like you that make HomeSystem such a great tool.
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Home System Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+This project and everyone participating in it is governed by the [HomeSystem Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 
 ## How Can I Contribute?
 

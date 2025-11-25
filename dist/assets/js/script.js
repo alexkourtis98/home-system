@@ -1,9 +1,9 @@
 /**
 =========================================================================
 =========================================================================
-Template Name: Datta Able - Tailwind Admin Template
-Author: CodedThemes
-Support: https://codedthemes.support-hub.io/
+Template Name: HomeSystem - Tailwind Admin Template
+Author: HomeSystem Team
+Support: https://home-system.support-hub.io/
 File: script.js
 =========================================================================
 =========================================================================

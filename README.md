@@ -1,4 +1,4 @@
-# Home System - Property Management
+# HomeSystem - Property Management
 
 A modern, full-stack property management application built for landlords and property managers to efficiently manage rental properties, tenants, leases, and payments.
 
@@ -60,7 +60,6 @@ A modern, full-stack property management application built for landlords and pro
 - **HTML5** - Markup
 - **TailwindCSS** - Utility-first CSS framework
 - **Vanilla JavaScript** - Client-side logic
-- **DattaAble Template** - Admin dashboard template (MIT license)
 - **ApexCharts** - Interactive charts
 
 ### Development Tools
@@ -276,7 +275,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for deta
 
 ## License
 
-This project uses the DattaAble Admin Template which is licensed under MIT. See [LICENSE](LICENSE) for details.
+This project is licensed under MIT. See [LICENSE](LICENSE) for details.
 
 ## Support
 
@@ -284,10 +283,9 @@ For issues, questions, or contributions, please open an issue on GitHub.
 
 ## Acknowledgments
 
-- Built with [DattaAble](https://codedthemes.com/item/datta-able-bootstrap-admin-template/) - Free Bootstrap Admin Template
 - Icons by [Feather Icons](https://feathericons.com/)
 - Charts by [ApexCharts](https://apexcharts.com/)
 
 ---
 
-**Built with care by the Home System Team**
+**Built with care by the HomeSystem Team**

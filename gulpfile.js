@@ -16,7 +16,7 @@ var postcss = require('gulp-postcss');
 tailwindcss = require('tailwindcss');
 
 // =======================================================
-// ----------- START: Datta Able Theme Configuration -----------
+// ----------- START: HomeSystem Theme Configuration -----------
 // =======================================================
 
 const caption_show = 'true'; // [ false , true ]
@@ -66,7 +66,7 @@ const layout = {
 };
 
 // =======================================================
-// ----------- END: Datta Able Theme Configuration -----------
+// ----------- END: HomeSystem Theme Configuration -----------
 // =======================================================
 
 // all paths setup

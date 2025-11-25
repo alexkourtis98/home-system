@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the Home System Property Management will be documented in this file.
+All notable changes to the HomeSystem Property Management will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2025-01-23
 
 ### Added
-- Initial release of Home System Property Management
+- Initial release of HomeSystem Property Management
 - Property management with CRUD operations
 - Tenant management with complete profiles
 - Lease management with utilities tracking
@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Database seeder for demo data
 - RESTful API with pagination support
 - Responsive TailwindCSS frontend
-- DattaAble admin template integration
+- Custom admin dashboard interface
 - Interactive charts with ApexCharts
 - Environment-based configuration
 - Comprehensive API documentation

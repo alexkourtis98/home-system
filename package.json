@@ -1,10 +1,10 @@
 {
   "name": "home-system",
   "version": "1.0.0",
-  "description": "Home System - Property Management Application",
+  "description": "HomeSystem - Property Management Application",
   "main": "server.js",
   "author": {
-    "name": "Home System",
+    "name": "HomeSystem",
     "email": "admin@home-system.com"
   },
   "scripts": {

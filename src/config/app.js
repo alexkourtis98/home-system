@@ -2,7 +2,7 @@
  * Application configuration
  */
 module.exports = {
-  name: 'Home System',
+  name: 'HomeSystem',
   port: parseInt(process.env.PORT, 10) || 3000,
 
   // Request body limits
