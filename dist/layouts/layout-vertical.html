@@ -1,0 +1,121 @@
+<!-- [ Pre-loader ] start -->
+<div class="loader-bg fixed inset-0 bg-white dark:bg-themedark-cardbg z-[1034]">
+  <div class="loader-track h-[5px] w-full inline-block absolute overflow-hidden top-0">
+    <div class="loader-fill w-[300px] h-[5px] bg-primary-500 absolute top-0 left-0 animate-[hitZak_0.6s_ease-in-out_infinite_alternate]"></div>
+  </div>
+</div>
+<!-- [ Pre-loader ] End -->
+ <!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header flex items-center py-4 px-6 h-header-height">
+      <a href="../dashboard/index.html" class="b-brand flex items-center gap-3">
+        <!-- ========   Change your logo from here   ============ -->
+        <img src="../assets/images/logo-white.svg" class="img-fluid logo logo-lg" alt="logo" />
+        <img src="../assets/images/favicon.svg" class="img-fluid logo logo-sm" alt="logo" />
+      </a>
+    </div>
+    <div class="navbar-content h-[calc(100vh_-_74px)] py-2.5">
+      <ul class="pc-navbar">
+        <li class="pc-item pc-caption">
+          <label>Navigation</label>
+        </li>
+        <li class="pc-item">
+          <a href="../dashboard/index.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Property Management</label>
+          <i data-feather="building"></i>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/properties.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Properties</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/tenants.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="users"></i>
+            </span>
+            <span class="pc-mtext">Tenants</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/leases.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="file-text"></i>
+            </span>
+            <span class="pc-mtext">Leases</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/payments.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="credit-card"></i>
+            </span>
+            <span class="pc-mtext">Payments</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Account</label>
+          <i data-feather="user"></i>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link" onclick="logout()">
+            <span class="pc-micon">
+              <i data-feather="log-out"></i>
+            </span>
+            <span class="pc-mtext">Logout</span>
+          </a>
+        </li>
+
+        <script>
+        function logout() {
+          // Clear the token
+          localStorage.removeItem('token');
+          // Redirect to login page
+          window.location.href = '../pages/login.html';
+        }
+        </script>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->
+ <!-- [ Header Topbar ] start -->
+<header class="pc-header">
+  <div class="header-wrapper flex max-sm:px-[15px] px-[25px] grow"><!-- [Mobile Media Block] start -->
+<div class="me-auto pc-mob-drp">
+  <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+    <!-- ======= Menu collapse Icon ===== -->
+    <li class="pc-h-item pc-sidebar-collapse max-lg:hidden lg:inline-flex">
+      <a href="#" class="pc-head-link ltr:!ml-0 rtl:!mr-0" id="sidebar-hide">
+        <i data-feather="menu"></i>
+      </a>
+    </li>
+    <li class="pc-h-item pc-sidebar-popup lg:hidden">
+      <a href="#" class="pc-head-link ltr:!ml-0 rtl:!mr-0" id="mobile-collapse">
+        <i data-feather="menu"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- [Mobile Media Block end] -->
+<div class="ms-auto">
+  <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+    <!-- Header content removed for clean interface -->
+  </ul>
+</div></div>
+</header>
+<!-- [ Header ] end -->
+

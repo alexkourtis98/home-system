@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
+  <!-- [Head] start -->
+
+  <head>
+    <title>Dashboard - Domikon | Datta Able Dashboard Template</title>
+    <!-- [Meta] -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="Datta Able is trending dashboard template made using Bootstrap 5 design framework. Datta Able is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies."
+    />
+    <meta
+      name="keywords"
+      content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard"
+    />
+    <meta name="author" content="CodedThemes" />
+
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon" />
+
+     <!-- [Font] Family -->
+     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <!-- [phosphor Icons] https://phosphoricons.com/ -->
+    <link rel="stylesheet" href="../assets/fonts/phosphor/duotone/style.css" />
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css" />
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/feather.css" />
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/fontawesome.css" />
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/material.css" />
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+    <!-- [Modal Fix CSS] -->
+    <link rel="stylesheet" href="../assets/css/modal-fix.css" />
+
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+
+  <body>
+    <!-- [ Pre-loader ] start -->
+<div class="loader-bg fixed inset-0 bg-white dark:bg-themedark-cardbg z-[1034]">
+  <div class="loader-track h-[5px] w-full inline-block absolute overflow-hidden top-0">
+    <div class="loader-fill w-[300px] h-[5px] bg-primary-500 absolute top-0 left-0 animate-[hitZak_0.6s_ease-in-out_infinite_alternate]"></div>
+  </div>
+</div>
+<!-- [ Pre-loader ] End -->
+ <!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header flex items-center py-4 px-6 h-header-height">
+      <a href="../dashboard/index.html" class="b-brand flex items-center gap-3">
+        <!-- ========   Change your logo from here   ============ -->
+        <img src="../assets/images/logo-white.svg" class="img-fluid logo logo-lg" alt="logo" />
+        <img src="../assets/images/favicon.svg" class="img-fluid logo logo-sm" alt="logo" />
+      </a>
+    </div>
+    <div class="navbar-content h-[calc(100vh_-_74px)] py-2.5">
+      <ul class="pc-navbar">
+        <li class="pc-item pc-caption">
+          <label>Navigation</label>
+        </li>
+        <li class="pc-item">
+          <a href="../dashboard/index.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Property Management</label>
+          <i data-feather="building"></i>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/properties.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Properties</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/tenants.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="users"></i>
+            </span>
+            <span class="pc-mtext">Tenants</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/leases.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="file-text"></i>
+            </span>
+            <span class="pc-mtext">Leases</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/payments.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="credit-card"></i>
+            </span>
+            <span class="pc-mtext">Payments</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Account</label>
+          <i data-feather="user"></i>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link" onclick="logout()">
+            <span class="pc-micon">
+              <i data-feather="log-out"></i>
+            </span>
+            <span class="pc-mtext">Logout</span>
+          </a>
+        </li>
+
+        <script>
+        function logout() {
+          // Clear the token
+          localStorage.removeItem('token');
+          // Redirect to login page
+          window.location.href = '../pages/login.html';
+        }
+        </script>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->
+ <!-- [ Header Topbar ] start -->
+<header class="pc-header">
+  <div class="header-wrapper flex max-sm:px-[15px] px-[25px] grow"><!-- [Mobile Media Block] start -->
+<div class="me-auto pc-mob-drp">
+  <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+    <!-- ======= Menu collapse Icon ===== -->
+    <li class="pc-h-item pc-sidebar-collapse max-lg:hidden lg:inline-flex">
+      <a href="#" class="pc-head-link ltr:!ml-0 rtl:!mr-0" id="sidebar-hide">
+        <i data-feather="menu"></i>
+      </a>
+    </li>
+    <li class="pc-h-item pc-sidebar-popup lg:hidden">
+      <a href="#" class="pc-head-link ltr:!ml-0 rtl:!mr-0" id="mobile-collapse">
+        <i data-feather="menu"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- [Mobile Media Block end] -->
+<div class="ms-auto">
+  <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+    <!-- Header content removed for clean interface -->
+  </ul>
+</div></div>
+</header>
+<!-- [ Header ] end -->
+
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+      <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="page-header-title">
+              <h5 class="mb-0 font-medium">Overview</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
+              <li class="breadcrumb-item" aria-current="page">Overview</li>
+            </ul>
+          </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        
+        <!-- [ Dashboard Header ] start -->
+        <div class="grid grid-cols-12 gap-x-6 mb-6">
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 class="mb-2">🏠 Welcome to Domikon</h3>
+                    <p class="text-muted mb-0">Property Management Dashboard</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-muted mb-1">Today</p>
+                    <h5 class="mb-0" id="currentDate">-</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- [ Dashboard Header ] end -->
+
+        <!-- [ Main Content ] start -->
+        <div class="grid grid-cols-12 gap-x-6">
+          <!-- [ Property Stats ] start -->
+          <div class="col-span-12 xl:col-span-3 md:col-span-6">
+            <div class="card">
+              <div class="card-header !pb-0 !border-b-0">
+                <h5>Properties</h5>
+              </div>
+              <div class="card-body">
+                <div class="flex items-center justify-between gap-3 flex-wrap">
+                  <h3 class="font-light flex items-center mb-0">
+                    <i class="feather icon-home text-primary-500 text-[30px] mr-1.5"></i>
+                    <span id="totalProperties">-</span>
+                  </h3>
+                  <p class="mb-0" id="occupancyRate">-%</p>
+                </div>
+                <div class="w-full bg-theme-bodybg rounded-lg h-1.5 mt-6 dark:bg-themedark-bodybg">
+                  <div class="bg-theme-bg-1 h-full rounded-lg shadow-[0_10px_20px_0_rgba(0,0,0,0.3)]" role="progressbar"
+                    style="width: 75%" id="occupancyBar"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm text-muted">
+                  <span>Occupancy Rate</span>
+                  <span id="occupancyText">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-span-12 xl:col-span-3 md:col-span-6">
+            <div class="card">
+              <div class="card-header !pb-0 !border-b-0">
+                <h5>Monthly Revenue</h5>
+              </div>
+              <div class="card-body">
+                <div class="flex items-center justify-between gap-3 flex-wrap">
+                  <h3 class="font-light flex items-center mb-0">
+                    <i class="feather icon-dollar-sign text-success-500 text-[30px] mr-1.5"></i>
+                    $<span id="monthlyRevenue">0</span>
+                  </h3>
+                  <p class="mb-0 text-success-500" id="collectionRate">0%</p>
+                </div>
+                <div class="w-full bg-theme-bodybg rounded-lg h-1.5 mt-6 dark:bg-themedark-bodybg">
+                  <div class="bg-success-500 h-full rounded-lg shadow-[0_10px_20px_0_rgba(0,0,0,0.3)]" role="progressbar"
+                    style="width: 0%" id="collectionBar"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm text-muted">
+                  <span>Collection Rate</span>
+                  <span id="collectionText">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-span-12 xl:col-span-3 md:col-span-6">
+            <div class="card">
+              <div class="card-header !pb-0 !border-b-0">
+                <h5>Active Tenants</h5>
+              </div>
+              <div class="card-body">
+                <div class="flex items-center justify-between gap-3 flex-wrap">
+                  <h3 class="font-light flex items-center mb-0">
+                    <i class="feather icon-users text-info-500 text-[30px] mr-1.5"></i>
+                    <span id="activeTenants">-</span>
+                  </h3>
+                  <p class="mb-0" id="totalTenants">- total</p>
+                </div>
+                <div class="w-full bg-theme-bodybg rounded-lg h-1.5 mt-6 dark:bg-themedark-bodybg">
+                  <div class="bg-info-500 h-full rounded-lg shadow-[0_10px_20px_0_rgba(0,0,0,0.3)]" role="progressbar"
+                    style="width: 100%" id="tenantsBar"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm text-muted">
+                  <span>Active Status</span>
+                  <span id="tenantsText">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-span-12 xl:col-span-3 md:col-span-6">
+            <div class="card">
+              <div class="card-header !pb-0 !border-b-0">
+                <h5>Active Leases</h5>
+              </div>
+              <div class="card-body">
+                <div class="flex items-center justify-between gap-3 flex-wrap">
+                  <h3 class="font-light flex items-center mb-0">
+                    <i class="feather icon-file-text text-warning-500 text-[30px] mr-1.5"></i>
+                    <span id="activeLeases">-</span>
+                  </h3>
+                  <p class="mb-0" id="totalLeases">- total</p>
+                </div>
+                <div class="w-full bg-theme-bodybg rounded-lg h-1.5 mt-6 dark:bg-themedark-bodybg">
+                  <div class="bg-warning-500 h-full rounded-lg shadow-[0_10px_20px_0_rgba(0,0,0,0.3)]" role="progressbar"
+                    style="width: 80%" id="leasesBar"></div>
+                </div>
+                <div class="flex justify-between mt-2 text-sm text-muted">
+                  <span>Active Rate</span>
+                  <span id="leasesText">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Property Stats ] end -->
+
+          <!-- [ Property Status ] start -->
+          <div class="col-span-12 md:col-span-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>Property Status</h5>
+              </div>
+              <div class="card-body">
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <div class="w-3 h-3 rounded-full bg-success-500 mr-3"></div>
+                      <span>Available</span>
+                    </div>
+                    <span class="font-medium" id="availableProperties">-</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <div class="w-3 h-3 rounded-full bg-warning-500 mr-3"></div>
+                      <span>Occupied</span>
+                    </div>
+                    <span class="font-medium" id="occupiedProperties">-</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <div class="w-3 h-3 rounded-full bg-danger-500 mr-3"></div>
+                      <span>Maintenance</span>
+                    </div>
+                    <span class="font-medium" id="maintenanceProperties">-</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                      <div class="w-3 h-3 rounded-full bg-secondary-500 mr-3"></div>
+                      <span>Unavailable</span>
+                    </div>
+                    <span class="font-medium" id="unavailableProperties">-</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Property Status ] end -->
+
+          <!-- [ Recent Activity ] start -->
+          <div class="col-span-12 md:col-span-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>Recent Activity</h5>
+              </div>
+              <div class="card-body">
+                <div class="space-y-4" id="recentActivity">
+                  <div class="text-center text-muted py-4">
+                    <div class="spinner-border spinner-border-sm" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Recent Activity ] end -->
+
+          <!-- [ Upcoming Expirations ] start -->
+          <div class="col-span-12 lg:col-span-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>Lease Expirations (Next 3 Months)</h5>
+              </div>
+              <div class="card-body">
+                <div class="space-y-3" id="upcomingExpirations">
+                  <div class="text-center text-muted py-4">
+                    <div class="spinner-border spinner-border-sm" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Upcoming Expirations ] end -->
+
+          <!-- [ Overdue Payments ] start -->
+          <div class="col-span-12 lg:col-span-6">
+            <div class="card">
+              <div class="card-header">
+                <h5>Overdue Payments</h5>
+              </div>
+              <div class="card-body">
+                <div class="space-y-3" id="overduePayments">
+                  <div class="text-center text-muted py-4">
+                    <div class="spinner-border spinner-border-sm" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Overdue Payments ] end -->
+
+          <!-- [ Quick Actions ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-header">
+                <h5>Quick Actions</h5>
+              </div>
+              <div class="card-body">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <a href="../pages/properties.html" class="btn btn-outline-primary">
+                    <i class="ti ti-home mr-2"></i>
+                    Add Property
+                  </a>
+                  <a href="../pages/tenants.html" class="btn btn-outline-info">
+                    <i class="ti ti-users mr-2"></i>
+                    Add Tenant
+                  </a>
+                  <a href="../pages/leases.html" class="btn btn-outline-warning">
+                    <i class="ti ti-file-text mr-2"></i>
+                    Create Lease
+                  </a>
+                  <a href="../pages/payments.html" class="btn btn-outline-success">
+                    <i class="ti ti-credit-card mr-2"></i>
+                    Manage Payments
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Quick Actions ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <!-- Required Js -->
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/icon/custom-icon.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+    <script src="../assets/js/component.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/script.js"></script>
+
+    <div class="floting-button fixed bottom-[50px] right-[30px] z-[1030]">
+    </div>
+
+    
+    <script>
+      layout_change('false');
+    </script>
+     
+    
+    <script>
+      layout_theme_sidebar_change('dark');
+    </script>
+    
+     
+    <script>
+      change_box_container('false');
+    </script>
+     
+    <script>
+      layout_caption_change('true');
+    </script>
+     
+    <script>
+      layout_rtl_change('false');
+    </script>
+     
+    <script>
+      preset_change('preset-1');
+    </script>
+     
+    <script>
+      main_layout_change('vertical');
+    </script>
+    
+
+    <script src="../assets/js/pages/dashboard.js"></script>
+  </body>
+  <!-- [Body] end -->
+</html>

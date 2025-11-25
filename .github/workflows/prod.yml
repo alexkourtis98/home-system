@@ -1,0 +1,60 @@
+name: Build and Test
+
+# Runs on push to main branch
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: 🔨 Build and Validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 📦 Install Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.x"
+
+      - name: 📥 Install dependencies
+        run: npm ci
+
+      - name: 🔨 Build frontend assets
+        run: npm run build
+
+      - name: ✅ Build successful
+        run: echo "Build completed successfully!"
+
+  # Deployment configuration
+  # To enable deployment, configure the following:
+  # 1. Add your server SSH key to GitHub Secrets as SERVER_SSH_KEY
+  # 2. Update REMOTE_HOST, REMOTE_USER, REMOTE_PORT, and TARGET below
+  # 3. Uncomment the deploy job
+  #
+  # deploy:
+  #   needs: build
+  #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+  #   name: 🚀 Deploy
+  #   runs-on: ubuntu-latest
+  #
+  #   steps:
+  #     - name: 🚚 Get latest code
+  #       uses: actions/checkout@v4
+  #
+  #     - name: 📂 Deploy to Server
+  #       uses: easingthemes/ssh-deploy@v4
+  #       env:
+  #         SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+  #         SOURCE: 'dist/'
+  #         REMOTE_HOST: your-server.com
+  #         REMOTE_USER: your-username
+  #         REMOTE_PORT: '22'
+  #         TARGET: /path/to/deploy
+  #         EXCLUDE: '/node_modules/'

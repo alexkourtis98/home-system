@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
+  <!-- [Head] start -->
+  <head>
+    <title>Properties - Domikon | Datta Able Dashboard Template</title>
+    <!-- [Meta] -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="Datta Able is trending dashboard template made using Bootstrap 5 design framework. Datta Able is available in Bootstrap, React, CodeIgniter, Angular,  and .net Technologies."
+    />
+    <meta
+      name="keywords"
+      content="Bootstrap admin template, Dashboard UI Kit, Dashboard Template, Backend Panel, react dashboard, angular dashboard"
+    />
+    <meta name="author" content="CodedThemes" />
+
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="../assets/images/favicon.svg" type="image/x-icon" />
+
+     <!-- [Font] Family -->
+     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <!-- [phosphor Icons] https://phosphoricons.com/ -->
+    <link rel="stylesheet" href="../assets/fonts/phosphor/duotone/style.css" />
+    <!-- [Tabler Icons] https://tablericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css" />
+    <!-- [Feather Icons] https://feathericons.com -->
+    <link rel="stylesheet" href="../assets/fonts/feather.css" />
+    <!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/fontawesome.css" />
+    <!-- [Material Icons] https://fonts.google.com/icons -->
+    <link rel="stylesheet" href="../assets/fonts/material.css" />
+    <!-- [Template CSS Files] -->
+    <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+    <!-- [Modal Fix CSS] -->
+    <link rel="stylesheet" href="../assets/css/modal-fix.css" />
+
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+
+  <body>
+    <!-- [ Pre-loader ] start -->
+<div class="loader-bg fixed inset-0 bg-white dark:bg-themedark-cardbg z-[1034]">
+  <div class="loader-track h-[5px] w-full inline-block absolute overflow-hidden top-0">
+    <div class="loader-fill w-[300px] h-[5px] bg-primary-500 absolute top-0 left-0 animate-[hitZak_0.6s_ease-in-out_infinite_alternate]"></div>
+  </div>
+</div>
+<!-- [ Pre-loader ] End -->
+ <!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header flex items-center py-4 px-6 h-header-height">
+      <a href="../dashboard/index.html" class="b-brand flex items-center gap-3">
+        <!-- ========   Change your logo from here   ============ -->
+        <img src="../assets/images/logo-white.svg" class="img-fluid logo logo-lg" alt="logo" />
+        <img src="../assets/images/favicon.svg" class="img-fluid logo logo-sm" alt="logo" />
+      </a>
+    </div>
+    <div class="navbar-content h-[calc(100vh_-_74px)] py-2.5">
+      <ul class="pc-navbar">
+        <li class="pc-item pc-caption">
+          <label>Navigation</label>
+        </li>
+        <li class="pc-item">
+          <a href="../dashboard/index.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Property Management</label>
+          <i data-feather="building"></i>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/properties.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Properties</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/tenants.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="users"></i>
+            </span>
+            <span class="pc-mtext">Tenants</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/leases.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="file-text"></i>
+            </span>
+            <span class="pc-mtext">Leases</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/payments.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="credit-card"></i>
+            </span>
+            <span class="pc-mtext">Payments</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Account</label>
+          <i data-feather="user"></i>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link" onclick="logout()">
+            <span class="pc-micon">
+              <i data-feather="log-out"></i>
+            </span>
+            <span class="pc-mtext">Logout</span>
+          </a>
+        </li>
+
+        <script>
+        function logout() {
+          // Clear the token
+          localStorage.removeItem('token');
+          // Redirect to login page
+          window.location.href = '../pages/login.html';
+        }
+        </script>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->
+ <!-- [ Header Topbar ] start -->
+<header class="pc-header">
+  <div class="header-wrapper flex max-sm:px-[15px] px-[25px] grow"><!-- [Mobile Media Block] start -->
+<div class="me-auto pc-mob-drp">
+  <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+    <!-- ======= Menu collapse Icon ===== -->
+    <li class="pc-h-item pc-sidebar-collapse max-lg:hidden lg:inline-flex">
+      <a href="#" class="pc-head-link ltr:!ml-0 rtl:!mr-0" id="sidebar-hide">
+        <i data-feather="menu"></i>
+      </a>
+    </li>
+    <li class="pc-h-item pc-sidebar-popup lg:hidden">
+      <a href="#" class="pc-head-link ltr:!ml-0 rtl:!mr-0" id="mobile-collapse">
+        <i data-feather="menu"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+<!-- [Mobile Media Block end] -->
+<div class="ms-auto">
+  <ul class="inline-flex *:min-h-header-height *:inline-flex *:items-center">
+    <!-- Header content removed for clean interface -->
+  </ul>
+</div></div>
+</header>
+<!-- [ Header ] end -->
+
+
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+      <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+          <div class="page-block">
+            <div class="page-header-title">
+              <h5 class="mb-0 font-medium">Properties</h5>
+            </div>
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="../dashboard/index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript: void(0)">Property Management</a></li>
+              <li class="breadcrumb-item" aria-current="page">Properties</li>
+            </ul>
+          </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+        
+        <!-- [ Main Content ] start -->
+        <div class="grid grid-cols-12 gap-x-6">
+          <!-- [ Properties Header ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-header flex items-center justify-between">
+                <h5 class="mb-0">Properties Management</h5>
+                <button type="button" class="btn btn-primary" data-pc-toggle="modal" data-pc-target="#propertyModal">
+                  <i class="ti ti-plus mr-2"></i>Add Property
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- [ Properties Header ] end -->
+
+          <!-- [ Properties Stats ] start -->
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Total Properties</p>
+                    <h4 class="mb-0" id="totalProperties">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
+                      <i class="ti ti-home text-primary-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Available</p>
+                    <h4 class="mb-0 text-success-500" id="availableProperties">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-success-100 dark:bg-success-500/20 flex items-center justify-center">
+                      <i class="ti ti-check text-success-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Occupied</p>
+                    <h4 class="mb-0 text-warning-500" id="occupiedProperties">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-warning-100 dark:bg-warning-500/20 flex items-center justify-center">
+                      <i class="ti ti-users text-warning-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Maintenance</p>
+                    <h4 class="mb-0 text-danger-500" id="maintenanceProperties">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-danger-100 dark:bg-danger-500/20 flex items-center justify-center">
+                      <i class="ti ti-tools text-danger-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Properties Stats ] end -->
+
+          <!-- [ Properties Table ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-3 mb-4">
+                  <select id="statusFilter" class="form-control w-auto">
+                    <option value="">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="occupied">Occupied</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="unavailable">Unavailable</option>
+                  </select>
+                  <select id="typeFilter" class="form-control w-auto">
+                    <option value="">All Types</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="house">House</option>
+                    <option value="studio">Studio</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <button type="button" class="btn btn-outline-secondary" onclick="clearFilters()">
+                    <i class="ti ti-x mr-1"></i>Clear
+                  </button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="table table-hover" id="propertiesTable">
+                    <thead>
+                      <tr>
+                        <th>Property</th>
+                        <th>Address</th>
+                        <th>Type</th>
+                        <th>Size</th>
+                        <th>Monthly Rent</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="propertiesTableBody">
+                      <tr>
+                        <td colspan="7" class="text-center py-8">
+                          <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-between mt-4">
+                  <div class="text-muted">
+                    Showing <span id="showingStart">-</span> to <span id="showingEnd">-</span> of <span id="showingTotal">-</span> properties
+                  </div>
+                  <nav>
+                    <ul class="pagination pagination-sm mb-0" id="pagination">
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Properties Table ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <!-- [ Property Modal ] start -->
+    <div class="modal fade" id="propertyModal" tabindex="-1" role="dialog" aria-labelledby="propertyModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="propertyModalLabel">Add Property</h5>
+            <button type="button" class="btn-close" data-pc-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="propertyForm">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="propertyTitle">Property Title *</label>
+                  <input type="text" class="form-control" id="propertyTitle" name="title" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="propertyType">Property Type *</label>
+                  <select class="form-control" id="propertyType" name="type" required>
+                    <option value="">Select Type</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="house">House</option>
+                    <option value="studio">Studio</option>
+                    <option value="commercial">Commercial</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label" for="propertyAddress">Address *</label>
+                  <textarea class="form-control" id="propertyAddress" name="address" rows="2" required></textarea>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="propertySize">Size *</label>
+                  <input type="text" class="form-control" id="propertySize" name="size" placeholder="e.g. 1200 sq ft" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="monthlyRent">Monthly Rent</label>
+                  <input type="number" class="form-control" id="monthlyRent" name="monthlyRent" step="0.01" min="0">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="propertyStatus">Status</label>
+                  <select class="form-control" id="propertyStatus" name="status">
+                    <option value="available">Available</option>
+                    <option value="occupied">Occupied</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="unavailable">Unavailable</option>
+                  </select>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label" for="propertyNotes">Notes</label>
+                  <textarea class="form-control" id="propertyNotes" name="notes" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-pc-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="savePropertyBtn">Save Property</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- [ Property Modal ] end -->
+
+    <!-- Required Js -->
+    <script src="../assets/js/plugins/simplebar.min.js"></script>
+    <script src="../assets/js/plugins/popper.min.js"></script>
+    <script src="../assets/js/icon/custom-icon.js"></script>
+    <script src="../assets/js/plugins/feather.min.js"></script>
+    <script src="../assets/js/component.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/script.js"></script>
+
+    <div class="floting-button fixed bottom-[50px] right-[30px] z-[1030]">
+    </div>
+
+    
+    <script>
+      layout_change('false');
+    </script>
+     
+    
+    <script>
+      layout_theme_sidebar_change('dark');
+    </script>
+    
+     
+    <script>
+      change_box_container('false');
+    </script>
+     
+    <script>
+      layout_caption_change('true');
+    </script>
+     
+    <script>
+      layout_rtl_change('false');
+    </script>
+     
+    <script>
+      preset_change('preset-1');
+    </script>
+     
+    <script>
+      main_layout_change('vertical');
+    </script>
+    
+
+    <script src="../assets/js/pages/properties.js"></script>
+  </body>
+  <!-- [Body] end -->
+</html> 

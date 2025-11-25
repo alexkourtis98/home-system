@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" @@bodySetup>
+  <!-- [Head] start -->
+  <head>
+    @@include('../layouts/head-page-meta.html', {'title': 'Tenants - Domikon'})
+    @@include('../layouts/head-css.html')
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+
+  <body>
+    @@include('../layouts/layout-vertical.html')
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+      <div class="pc-content">
+        @@include('../layouts/breadcrumb.html', {'breadcrumb-item': 'Property Management', 'breadcrumb-item-active': 'Tenants'})
+        
+        <!-- [ Main Content ] start -->
+        <div class="grid grid-cols-12 gap-x-6">
+          <!-- [ Tenants Header ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-header flex items-center justify-between">
+                <h5 class="mb-0">Tenants Management</h5>
+                <button type="button" class="btn btn-primary" data-pc-toggle="modal" data-pc-target="#tenantModal">
+                  <i class="ti ti-plus mr-2"></i>Add Tenant
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- [ Tenants Header ] end -->
+
+          <!-- [ Tenants Stats ] start -->
+          <div class="col-span-12 md:col-span-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Total Tenants</p>
+                    <h4 class="mb-0" id="totalTenants">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
+                      <i class="ti ti-users text-primary-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Active Tenants</p>
+                    <h4 class="mb-0 text-success-500" id="activeTenants">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-success-100 dark:bg-success-500/20 flex items-center justify-center">
+                      <i class="ti ti-check text-success-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Tenants Stats ] end -->
+
+          <!-- [ Tenants Table ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-3 mb-4">
+                  <select id="statusFilter" class="form-control w-auto">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                  <input type="text" id="searchFilter" class="form-control w-auto" placeholder="Search tenants...">
+                  <button type="button" class="btn btn-outline-secondary" onclick="clearFilters()">
+                    <i class="ti ti-x mr-1"></i>Clear
+                  </button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="table table-hover" id="tenantsTable">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Contact</th>
+                        <th>ID/Passport</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tenantsTableBody">
+                      <tr>
+                        <td colspan="6" class="text-center py-8">
+                          <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-between mt-4">
+                  <div class="text-muted">
+                    Showing <span id="showingStart">-</span> to <span id="showingEnd">-</span> of <span id="showingTotal">-</span> tenants
+                  </div>
+                  <nav>
+                    <ul class="pagination pagination-sm mb-0" id="pagination">
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Tenants Table ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <!-- [ Tenant Modal ] start -->
+    <div class="modal fade" id="tenantModal" tabindex="-1" role="dialog" aria-labelledby="tenantModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="tenantModalLabel">Add Tenant</h5>
+            <button type="button" class="btn-close" data-pc-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="tenantForm">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="tenantName">Full Name *</label>
+                  <input type="text" class="form-control" id="tenantName" name="name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="tenantPhone">Phone Number *</label>
+                  <input type="tel" class="form-control" id="tenantPhone" name="phone" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="tenantEmail">Email Address *</label>
+                  <input type="email" class="form-control" id="tenantEmail" name="email" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="tenantIdPassport">ID/Passport Number *</label>
+                  <input type="text" class="form-control" id="tenantIdPassport" name="idPassport" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="tenantStatus">Status</label>
+                  <select class="form-control" id="tenantStatus" name="status">
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label">Emergency Contact</label>
+                  <div class="row">
+                    <div class="col-md-4 mb-2">
+                      <input type="text" class="form-control" id="emergencyName" name="emergencyContact.name" placeholder="Contact Name">
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <input type="tel" class="form-control" id="emergencyPhone" name="emergencyContact.phone" placeholder="Contact Phone">
+                    </div>
+                    <div class="col-md-4 mb-2">
+                      <input type="text" class="form-control" id="emergencyRelationship" name="emergencyContact.relationship" placeholder="Relationship">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label" for="tenantNotes">Notes</label>
+                  <textarea class="form-control" id="tenantNotes" name="notes" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-pc-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="saveTenantBtn">Save Tenant</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- [ Tenant Modal ] end -->
+
+    @@include('../layouts/footer-js.html')
+    <script src="../assets/js/pages/tenants.js"></script>
+  </body>
+  <!-- [Body] end -->
+</html> 

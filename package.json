@@ -1,0 +1,70 @@
+{
+  "name": "home-system",
+  "version": "1.0.0",
+  "description": "Home System - Property Management Application",
+  "main": "server.js",
+  "author": {
+    "name": "Home System",
+    "email": "admin@home-system.com"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "gulp build-prod",
+    "format": "prettier --write ./src",
+    "seed": "node utils/seeder.js",
+    "seed:clean": "node utils/seeder.js"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.3",
+    "@babel/helper-environment-visitor": "^7.22.20",
+    "del": "^6.1.1",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-cssbeautify": "^3.0.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-imagemin": "^9.0.0",
+    "gulp-inject": "^5.0.5",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-smushit": "1.2.0",
+    "gulp-uglify": "^3.0.2",
+    "merge-stream": "^2.0.0",
+    "mongodb-memory-server": "^10.3.0",
+    "prettier": "3.2.5",
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "sass": "^1.71.1",
+    "tailwindcss-themer": "^4.0.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "animate.css": "^4.1.1",
+    "bcryptjs": "^2.4.3",
+    "browser-sync": "^3.0.2",
+    "clipboard": "^2.0.11",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.1.5",
+    "express-validator": "^7.0.1",
+    "feather-icons": "^4.29.1",
+    "gulp-file-include": "^2.3.0",
+    "gulp-postcss": "^9.0.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.0.2",
+    "simplebar": "^6.2.5",
+    "tailwindcss": "^3.4.10",
+    "wow.js": "^1.2.2",
+    "xss-clean": "^0.1.4"
+  }
+}

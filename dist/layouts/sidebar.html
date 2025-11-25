@@ -1,0 +1,87 @@
+<!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header flex items-center py-4 px-6 h-header-height">
+      <a href="../dashboard/index.html" class="b-brand flex items-center gap-3">
+        <!-- ========   Change your logo from here   ============ -->
+        <img src="../assets/images/logo-white.svg" class="img-fluid logo logo-lg" alt="logo" />
+        <img src="../assets/images/favicon.svg" class="img-fluid logo logo-sm" alt="logo" />
+      </a>
+    </div>
+    <div class="navbar-content h-[calc(100vh_-_74px)] py-2.5">
+      <ul class="pc-navbar">
+        <li class="pc-item pc-caption">
+          <label>Navigation</label>
+        </li>
+        <li class="pc-item">
+          <a href="../dashboard/index.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Property Management</label>
+          <i data-feather="building"></i>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/properties.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="home"></i>
+            </span>
+            <span class="pc-mtext">Properties</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/tenants.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="users"></i>
+            </span>
+            <span class="pc-mtext">Tenants</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/leases.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="file-text"></i>
+            </span>
+            <span class="pc-mtext">Leases</span>
+          </a>
+        </li>
+        <li class="pc-item">
+          <a href="../pages/payments.html" class="pc-link">
+            <span class="pc-micon">
+              <i data-feather="credit-card"></i>
+            </span>
+            <span class="pc-mtext">Payments</span>
+          </a>
+        </li>
+
+        <li class="pc-item pc-caption">
+          <label>Account</label>
+          <i data-feather="user"></i>
+        </li>
+        <li class="pc-item">
+          <a href="#" class="pc-link" onclick="logout()">
+            <span class="pc-micon">
+              <i data-feather="log-out"></i>
+            </span>
+            <span class="pc-mtext">Logout</span>
+          </a>
+        </li>
+
+        <script>
+        function logout() {
+          // Clear the token
+          localStorage.removeItem('token');
+          // Redirect to login page
+          window.location.href = '../pages/login.html';
+        }
+        </script>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en" @@bodySetup>
+  <!-- [Head] start -->
+  <head>
+    @@include('../layouts/head-page-meta.html', {'title': 'Login - Domikon'}) 
+    @@include('../layouts/head-css.html')
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+
+  <body>
+    @@include('../layouts/loader.html')
+    <div class="auth-main relative">
+      <div class="auth-wrapper v1 flex items-center w-full h-full min-h-screen">
+        <div class="auth-form flex items-center justify-center grow flex-col min-h-screen relative p-6">
+          <div class="w-full max-w-[400px] relative">
+            <div class="auth-bg">
+              <span class="absolute top-[-100px] right-[-100px] w-[300px] h-[300px] block rounded-full bg-theme-bg-1 animate-[floating_7s_infinite]"></span>
+              <span class="absolute top-[150px] right-[-150px] w-5 h-5 block rounded-full bg-primary-500 animate-[floating_9s_infinite]"></span>
+              <span class="absolute left-[-150px] bottom-[150px] w-5 h-5 block rounded-full bg-theme-bg-1 animate-[floating_7s_infinite]"></span>
+              <span class="absolute left-[-100px] bottom-[-100px] w-[300px] h-[300px] block rounded-full bg-theme-bg-2 animate-[floating_9s_infinite]"></span>
+            </div>
+            <div class="card sm:my-12 w-full shadow-xl">
+              <div class="card-body !p-10">
+                <div class="text-center mb-8">
+                  <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">🏠 Domikon</h2>
+                  <p class="text-gray-600 dark:text-gray-400">Property Management System</p>
+                </div>
+                
+                <div id="loginAlert" class="hidden alert alert-danger mb-4"></div>
+                
+                <form id="loginForm">
+                  <div class="mb-4">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required />
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required />
+                  </div>
+                  <div class="flex mt-1 justify-between items-center flex-wrap mb-4">
+                    <div class="form-check">
+                      <input class="form-check-input input-primary" type="checkbox" id="rememberMe" />
+                      <label class="form-check-label text-muted" for="rememberMe">Remember me</label>
+                    </div>
+                  </div>
+                  <div class="mt-6 text-center">
+                    <button type="submit" id="loginBtn" class="btn btn-primary w-full shadow-lg">
+                      <span class="btn-text">Sign In</span>
+                      <span class="btn-loading hidden">
+                        <i class="ti ti-loader animate-spin mr-2"></i>
+                        Signing in...
+                      </span>
+                    </button>
+                  </div>
+                </form>
+                
+                <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <h6 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Demo Credentials:</h6>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">
+                    <strong>Username:</strong> admin<br>
+                    <strong>Password:</strong> admin123
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- [ Main Content ] end -->
+    @@include('../layouts/footer-js.html') 
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginAlert = document.getElementById('loginAlert');
+        const btnText = loginBtn.querySelector('.btn-text');
+        const btnLoading = loginBtn.querySelector('.btn-loading');
+        
+        // Check if already logged in
+        const token = localStorage.getItem('token');
+        if (token) {
+          window.location.href = '../dashboard/index.html';
+          return;
+        }
+        
+        loginForm.addEventListener('submit', async function(e) {
+          e.preventDefault();
+          
+          const username = document.getElementById('username').value;
+          const password = document.getElementById('password').value;
+          
+          // Show loading state
+          btnText.classList.add('hidden');
+          btnLoading.classList.remove('hidden');
+          loginBtn.disabled = true;
+          loginAlert.classList.add('hidden');
+          
+          try {
+            const response = await fetch('http://localhost:5000/api/auth/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ username, password })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+              // Store token
+              localStorage.setItem('token', data.token);
+              localStorage.setItem('user', JSON.stringify(data.user));
+              
+              // Redirect to dashboard
+              window.location.href = '../dashboard/index.html';
+            } else {
+              // Show error
+              loginAlert.textContent = data.message || 'Invalid credentials';
+              loginAlert.classList.remove('hidden');
+            }
+          } catch (error) {
+            console.error('Login error:', error);
+            loginAlert.textContent = 'Connection error. Please try again.';
+            loginAlert.classList.remove('hidden');
+          } finally {
+            // Reset button state
+            btnText.classList.remove('hidden');
+            btnLoading.classList.add('hidden');
+            loginBtn.disabled = false;
+          }
+        });
+      });
+    </script>
+  </body>
+  <!-- [Body] end -->
+</html> 

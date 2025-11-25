@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en" @@bodySetup>
+  <!-- [Head] start -->
+  <head>
+    @@include('../layouts/head-page-meta.html', {'title': 'Leases - Domikon'})
+    @@include('../layouts/head-css.html')
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+
+  <body>
+    @@include('../layouts/layout-vertical.html')
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+      <div class="pc-content">
+        @@include('../layouts/breadcrumb.html', {'breadcrumb-item': 'Property Management', 'breadcrumb-item-active': 'Leases'})
+        
+        <!-- [ Main Content ] start -->
+        <div class="grid grid-cols-12 gap-x-6">
+          <!-- [ Leases Header ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-header flex items-center justify-between">
+                <h5 class="mb-0">Leases Management</h5>
+                <button type="button" class="btn btn-primary" data-pc-toggle="modal" data-pc-target="#leaseModal">
+                  <i class="ti ti-plus mr-2"></i>Create Lease
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- [ Leases Header ] end -->
+
+          <!-- [ Leases Stats ] start -->
+          <div class="col-span-12 md:col-span-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Total Leases</p>
+                    <h4 class="mb-0" id="totalLeases">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
+                      <i class="ti ti-file-text text-primary-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Active Leases</p>
+                    <h4 class="mb-0 text-success-500" id="activeLeases">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-success-100 dark:bg-success-500/20 flex items-center justify-center">
+                      <i class="ti ti-check text-success-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Expiring Soon</p>
+                    <h4 class="mb-0 text-warning-500" id="expiringSoon">-</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-warning-100 dark:bg-warning-500/20 flex items-center justify-center">
+                      <i class="ti ti-clock text-warning-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Leases Stats ] end -->
+
+          <!-- [ Leases Table ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-3 mb-4">
+                  <select id="statusFilter" class="form-control w-auto">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="expired">Expired</option>
+                    <option value="terminated">Terminated</option>
+                    <option value="pending">Pending</option>
+                  </select>
+                  <input type="text" id="searchFilter" class="form-control w-auto" placeholder="Search leases...">
+                  <button type="button" class="btn btn-outline-secondary" onclick="clearFilters()">
+                    <i class="ti ti-x mr-1"></i>Clear
+                  </button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="table table-hover" id="leasesTable">
+                    <thead>
+                      <tr>
+                        <th>Property</th>
+                        <th>Tenant</th>
+                        <th>Duration</th>
+                        <th>Monthly Rent</th>
+                        <th>Deposit</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="leasesTableBody">
+                      <tr>
+                        <td colspan="7" class="text-center py-8">
+                          <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-between mt-4">
+                  <div class="text-muted">
+                    Showing <span id="showingStart">-</span> to <span id="showingEnd">-</span> of <span id="showingTotal">-</span> leases
+                  </div>
+                  <nav>
+                    <ul class="pagination pagination-sm mb-0" id="pagination">
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Leases Table ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <!-- [ Lease Modal ] start -->
+    <div class="modal fade" id="leaseModal" tabindex="-1" role="dialog" aria-labelledby="leaseModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="leaseModalLabel">Create Lease</h5>
+            <button type="button" class="btn-close" data-pc-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="leaseForm">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="leaseProperty">Property *</label>
+                  <select class="form-control" id="leaseProperty" name="property" required>
+                    <option value="">Select Property</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="leaseTenant">Tenant *</label>
+                  <select class="form-control" id="leaseTenant" name="tenant" required>
+                    <option value="">Select Tenant</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="startDate">Start Date *</label>
+                  <input type="date" class="form-control" id="startDate" name="startDate" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="endDate">End Date *</label>
+                  <input type="date" class="form-control" id="endDate" name="endDate" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="monthlyRent">Monthly Rent *</label>
+                  <input type="number" class="form-control" id="leaseMonthlyRent" name="monthlyRent" step="0.01" min="0" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="deposit">Security Deposit</label>
+                  <input type="number" class="form-control" id="leaseDeposit" name="deposit" step="0.01" min="0">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="leaseStatus">Status</label>
+                  <select class="form-control" id="leaseStatus" name="status">
+                    <option value="pending">Pending</option>
+                    <option value="active">Active</option>
+                    <option value="expired">Expired</option>
+                    <option value="terminated">Terminated</option>
+                  </select>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label">Utilities Included</label>
+                  <div class="row">
+                    <div class="col-md-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="utilityElectricity" name="utilities.electricity">
+                        <label class="form-check-label" for="utilityElectricity">Electricity</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="utilityWater" name="utilities.water">
+                        <label class="form-check-label" for="utilityWater">Water</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="utilityGas" name="utilities.gas">
+                        <label class="form-check-label" for="utilityGas">Gas</label>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="utilityInternet" name="utilities.internet">
+                        <label class="form-check-label" for="utilityInternet">Internet</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label" for="leaseNotes">Notes</label>
+                  <textarea class="form-control" id="leaseNotes" name="notes" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-pc-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="saveLeaseBtn">Save Lease</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- [ Lease Modal ] end -->
+
+    @@include('../layouts/footer-js.html')
+    <script src="../assets/js/pages/leases.js"></script>
+  </body>
+  <!-- [Body] end -->
+</html> 

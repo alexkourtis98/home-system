@@ -1,0 +1,70 @@
+<li class="pc-item pc-caption">
+  <label>Navigation</label>
+</li>
+<li class="pc-item">
+  <a href="../dashboard/index.html" class="pc-link">
+    <span class="pc-micon">
+      <i data-feather="home"></i>
+    </span>
+    <span class="pc-mtext">Dashboard</span>
+  </a>
+</li>
+
+<li class="pc-item pc-caption">
+  <label>Property Management</label>
+  <i data-feather="building"></i>
+</li>
+<li class="pc-item">
+  <a href="../pages/properties.html" class="pc-link">
+    <span class="pc-micon">
+      <i data-feather="home"></i>
+    </span>
+    <span class="pc-mtext">Properties</span>
+  </a>
+</li>
+<li class="pc-item">
+  <a href="../pages/tenants.html" class="pc-link">
+    <span class="pc-micon">
+      <i data-feather="users"></i>
+    </span>
+    <span class="pc-mtext">Tenants</span>
+  </a>
+</li>
+<li class="pc-item">
+  <a href="../pages/leases.html" class="pc-link">
+    <span class="pc-micon">
+      <i data-feather="file-text"></i>
+    </span>
+    <span class="pc-mtext">Leases</span>
+  </a>
+</li>
+<li class="pc-item">
+  <a href="../pages/payments.html" class="pc-link">
+    <span class="pc-micon">
+      <i data-feather="credit-card"></i>
+    </span>
+    <span class="pc-mtext">Payments</span>
+  </a>
+</li>
+
+<li class="pc-item pc-caption">
+  <label>Account</label>
+  <i data-feather="user"></i>
+</li>
+<li class="pc-item">
+  <a href="#" class="pc-link" onclick="logout()">
+    <span class="pc-micon">
+      <i data-feather="log-out"></i>
+    </span>
+    <span class="pc-mtext">Logout</span>
+  </a>
+</li>
+
+<script>
+function logout() {
+  // Clear the token
+  localStorage.removeItem('token');
+  // Redirect to login page
+  window.location.href = '../pages/login.html';
+}
+</script>

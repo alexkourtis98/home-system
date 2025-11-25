@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="en" @@bodySetup>
+  <!-- [Head] start -->
+  <head>
+    @@include('../layouts/head-page-meta.html', {'title': 'Payments - Domikon'})
+    @@include('../layouts/head-css.html')
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+
+  <body>
+    @@include('../layouts/layout-vertical.html')
+
+    <!-- [ Main Content ] start -->
+    <div class="pc-container">
+      <div class="pc-content">
+        @@include('../layouts/breadcrumb.html', {'breadcrumb-item': 'Property Management', 'breadcrumb-item-active': 'Payments'})
+        
+        <!-- [ Main Content ] start -->
+        <div class="grid grid-cols-12 gap-x-6">
+          <!-- [ Payments Header ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-header flex items-center justify-between">
+                <h5 class="mb-0">Rent Payments</h5>
+                <div class="flex gap-2">
+                  <button type="button" class="btn btn-outline-primary" data-pc-toggle="modal" data-pc-target="#generatePaymentsModal">
+                    <i class="ti ti-calendar mr-2"></i>Generate Monthly
+                  </button>
+                  <button type="button" class="btn btn-primary" data-pc-toggle="modal" data-pc-target="#paymentModal">
+                    <i class="ti ti-plus mr-2"></i>Add Payment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Payments Header ] end -->
+
+          <!-- [ Payments Stats ] start -->
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Expected This Month</p>
+                    <h4 class="mb-0" id="expectedAmount">$0</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center">
+                      <i class="ti ti-calendar text-primary-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Collected</p>
+                    <h4 class="mb-0 text-success-500" id="collectedAmount">$0</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-success-100 dark:bg-success-500/20 flex items-center justify-center">
+                      <i class="ti ti-check text-success-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Pending</p>
+                    <h4 class="mb-0 text-warning-500" id="pendingAmount">$0</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-warning-100 dark:bg-warning-500/20 flex items-center justify-center">
+                      <i class="ti ti-clock text-warning-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-12 md:col-span-3">
+            <div class="card">
+              <div class="card-body">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-muted mb-1">Collection Rate</p>
+                    <h4 class="mb-0 text-info-500" id="collectionRate">0%</h4>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 rounded-full bg-info-100 dark:bg-info-500/20 flex items-center justify-center">
+                      <i class="ti ti-percentage text-info-500 text-xl"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Payments Stats ] end -->
+
+          <!-- [ Payments Table ] start -->
+          <div class="col-span-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- Filters -->
+                <div class="flex flex-wrap gap-3 mb-4">
+                  <select id="statusFilter" class="form-control w-auto">
+                    <option value="">All Status</option>
+                    <option value="paid">Paid</option>
+                    <option value="pending">Pending</option>
+                    <option value="overdue">Overdue</option>
+                    <option value="partial">Partial</option>
+                  </select>
+                  <select id="monthFilter" class="form-control w-auto">
+                    <option value="">All Months</option>
+                  </select>
+                  <select id="yearFilter" class="form-control w-auto">
+                    <option value="">All Years</option>
+                  </select>
+                  <input type="text" id="searchFilter" class="form-control w-auto" placeholder="Search payments...">
+                  <button type="button" class="btn btn-outline-secondary" onclick="clearFilters()">
+                    <i class="ti ti-x mr-1"></i>Clear
+                  </button>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="table table-hover" id="paymentsTable">
+                    <thead>
+                      <tr>
+                        <th>Property</th>
+                        <th>Tenant</th>
+                        <th>Period</th>
+                        <th>Amount</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="paymentsTableBody">
+                      <tr>
+                        <td colspan="7" class="text-center py-8">
+                          <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-between mt-4">
+                  <div class="text-muted">
+                    Showing <span id="showingStart">-</span> to <span id="showingEnd">-</span> of <span id="showingTotal">-</span> payments
+                  </div>
+                  <nav>
+                    <ul class="pagination pagination-sm mb-0" id="pagination">
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- [ Payments Table ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+    <!-- [ Payment Modal ] start -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="paymentModalLabel">Add Payment</h5>
+            <button type="button" class="btn-close" data-pc-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="paymentForm">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="paymentLease">Lease *</label>
+                  <select class="form-control" id="paymentLease" name="lease" required>
+                    <option value="">Select Lease</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="paymentAmount">Amount *</label>
+                  <input type="number" class="form-control" id="paymentAmount" name="amount" step="0.01" min="0" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="paymentMonth">Month *</label>
+                  <select class="form-control" id="paymentMonth" name="month" required>
+                    <option value="">Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="paymentYear">Year *</label>
+                  <select class="form-control" id="paymentYear" name="year" required>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="dueDate">Due Date *</label>
+                  <input type="date" class="form-control" id="paymentDueDate" name="dueDate" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="paymentStatus">Status</label>
+                  <select class="form-control" id="paymentStatus" name="status">
+                    <option value="pending">Pending</option>
+                    <option value="paid">Paid</option>
+                    <option value="overdue">Overdue</option>
+                    <option value="partial">Partial</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="paidDate">Paid Date</label>
+                  <input type="date" class="form-control" id="paidDate" name="paidDate">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="paymentMethod">Payment Method</label>
+                  <select class="form-control" id="paymentMethod" name="paymentMethod">
+                    <option value="bank_transfer">Bank Transfer</option>
+                    <option value="cash">Cash</option>
+                    <option value="check">Check</option>
+                    <option value="online">Online</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="lateFee">Late Fee</label>
+                  <input type="number" class="form-control" id="lateFee" name="lateFee" step="0.01" min="0">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="receiptNumber">Receipt Number</label>
+                  <input type="text" class="form-control" id="receiptNumber" name="receiptNumber">
+                </div>
+                <div class="col-12 mb-3">
+                  <label class="form-label" for="paymentNotes">Notes</label>
+                  <textarea class="form-control" id="paymentNotes" name="notes" rows="3"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-pc-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="savePaymentBtn">Save Payment</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- [ Payment Modal ] end -->
+
+    <!-- [ Generate Payments Modal ] start -->
+    <div class="modal fade" id="generatePaymentsModal" tabindex="-1" role="dialog" aria-labelledby="generatePaymentsModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="generatePaymentsModalLabel">Generate Monthly Payments</h5>
+            <button type="button" class="btn-close" data-pc-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form id="generatePaymentsForm">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label" for="generateMonth">Month *</label>
+                <select class="form-control" id="generateMonth" name="month" required>
+                  <option value="">Select Month</option>
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="generateYear">Year *</label>
+                <select class="form-control" id="generateYear" name="year" required>
+                </select>
+              </div>
+              <div class="alert alert-info">
+                <i class="ti ti-info-circle mr-2"></i>
+                This will create payment records for all active leases for the selected month.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-pc-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="generatePaymentsBtn">Generate Payments</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- [ Generate Payments Modal ] end -->
+
+    @@include('../layouts/footer-js.html')
+    <script src="../assets/js/pages/payments.js"></script>
+  </body>
+  <!-- [Body] end -->
+</html> 
