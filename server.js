@@ -6,8 +6,10 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const path = require('path');
-const { sanitizeMiddleware } = require('./utils/sanitizer');
-require('dotenv').config();
+
+// Load configuration
+const config = require('./src/config');
+const { sanitizeMiddleware } = require('./src/utils/sanitizer');
 
 // MongoDB Memory Server - optional (dev dependency)
 let MongoMemoryServer;
@@ -26,72 +28,52 @@ const corsOptions = {
     // Allow requests with no origin (mobile apps, Postman, etc.)
     if (!origin) return callback(null, true);
 
-    // Allowed origins based on environment
-    const allowedOrigins = process.env.CORS_ORIGINS
-      ? process.env.CORS_ORIGINS.split(',')
-      : [
-          'http://localhost:5000',
-          'http://localhost:43217',
-          'http://127.0.0.1:5000',
-          'http://127.0.0.1:43217'
-        ];
-
-    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
+    if (config.security.cors.origins.indexOf(origin) !== -1 || config.isDevelopment) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
-  optionsSuccessStatus: 200
+  credentials: config.security.cors.credentials,
+  optionsSuccessStatus: config.security.cors.optionsSuccessStatus,
 };
 
 // Security middleware
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"], // Note: unsafe-eval needed for ApexCharts
-      imgSrc: ["'self'", "data:", "https:"],
-    },
-  },
-}));
+app.use(helmet(config.security.helmet));
 app.use(cors(corsOptions));
 
 // Sanitize data to prevent NoSQL injection
 app.use(mongoSanitize());
 
 // Body parsing middleware
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+app.use(express.json({ limit: config.app.bodyLimit }));
+app.use(express.urlencoded({ extended: true, limit: config.app.bodyLimit }));
 
 // XSS protection - sanitize user input
 app.use(sanitizeMiddleware);
 
 // Logging middleware
-app.use(morgan('combined'));
+app.use(morgan(config.app.logFormat));
 
 // Serve static files from dist directory
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, config.app.staticDir)));
 
 // Rate limiting for API routes only (not static files)
 const apiLimiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS) || 15 * 60 * 1000, // 15 minutes default
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS) || (process.env.NODE_ENV === 'production' ? 100 : 1000), // Higher limit in development
-  message: 'Too many requests from this IP, please try again later.',
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  windowMs: config.security.rateLimit.windowMs,
+  max: config.security.rateLimit.maxRequests,
+  message: config.security.rateLimit.message,
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
 // API Routes (with rate limiting)
-app.use('/api/auth', apiLimiter, require('./routes/auth'));
-app.use('/api/properties', apiLimiter, require('./routes/properties'));
-app.use('/api/tenants', apiLimiter, require('./routes/tenants'));
-app.use('/api/leases', apiLimiter, require('./routes/leases'));
-app.use('/api/payments', apiLimiter, require('./routes/payments'));
-app.use('/api/dashboard', apiLimiter, require('./routes/dashboard'));
+app.use('/api/auth', apiLimiter, require('./src/routes/auth'));
+app.use('/api/properties', apiLimiter, require('./src/routes/properties'));
+app.use('/api/tenants', apiLimiter, require('./src/routes/tenants'));
+app.use('/api/leases', apiLimiter, require('./src/routes/leases'));
+app.use('/api/payments', apiLimiter, require('./src/routes/payments'));
+app.use('/api/dashboard', apiLimiter, require('./src/routes/dashboard'));
 
 // Serve HTML pages
 app.get('/', (req, res) => {
@@ -132,11 +114,11 @@ app.use((req, res) => {
 // Database connection
 const connectDB = async () => {
   try {
-    let mongoURI = process.env.MONGODB_URI;
+    let mongoURI = config.database.uri;
 
     // If no MongoDB URI is provided, use MongoDB Memory Server for development (if available)
     if (!mongoURI) {
-      if (MongoMemoryServer) {
+      if (MongoMemoryServer && config.database.useMemoryServer) {
         console.log('No MONGODB_URI found, starting MongoDB Memory Server...');
         const mongod = await MongoMemoryServer.create();
         mongoURI = mongod.getUri();
@@ -148,7 +130,7 @@ const connectDB = async () => {
       }
     }
 
-    await mongoose.connect(mongoURI);
+    await mongoose.connect(mongoURI, config.database.options);
     console.log('MongoDB connected successfully');
     console.log(`Database: ${mongoURI.includes('memory') ? 'In-Memory (Development)' : 'External MongoDB'}`);
   } catch (error) {
@@ -158,8 +140,7 @@ const connectDB = async () => {
 };
 
 // Start server
-const PORT = process.env.PORT || 3000;
-const { initializeAuth } = require('./middleware/auth');
+const { initializeAuth } = require('./src/middleware/auth');
 
 // Initialize application
 const startServer = async () => {
@@ -171,10 +152,11 @@ const startServer = async () => {
     await initializeAuth();
 
     // Start HTTP server
-    app.listen(PORT, () => {
-      console.log(`🏠 Home System Server running on port ${PORT}`);
-      console.log(`📊 Dashboard: http://localhost:${PORT}/dashboard`);
+    app.listen(config.app.port, () => {
+      console.log(`🏠 ${config.app.name} Server running on port ${config.app.port}`);
+      console.log(`📊 Dashboard: http://localhost:${config.app.port}/dashboard`);
       console.log(`🔐 Authentication: Ready`);
+      console.log(`🌍 Environment: ${config.env}`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);
@@ -184,4 +166,4 @@ const startServer = async () => {
 
 startServer();
 
-module.exports = app; 
+module.exports = app;

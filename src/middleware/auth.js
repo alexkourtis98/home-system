@@ -1,21 +1,24 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const config = require('../config');
 
-// JWT Secret - MUST be changed in production
-const JWT_SECRET = process.env.JWT_SECRET || 'home-system-secret-key-2024';
+// JWT Secret from config
+const JWT_SECRET = config.auth.jwt.secret;
 
 // Validate JWT secret is not using default in production
-if (process.env.NODE_ENV === 'production' && JWT_SECRET === 'home-system-secret-key-2024') {
+if (config.isProduction && JWT_SECRET === 'home-system-secret-key-2024') {
   console.error('CRITICAL SECURITY WARNING: Using default JWT_SECRET in production!');
   console.error('Please set a strong JWT_SECRET environment variable.');
   process.exit(1);
 }
 
-// Admin user configuration from environment variables
+// Admin user configuration from config
 const ADMIN_USER = {
   id: 'admin',
-  username: process.env.ADMIN_USERNAME || 'admin',
-  email: process.env.ADMIN_EMAIL || 'admin@home-system.com'
+  username: config.auth.defaultAdmin.email.split('@')[0], // Use email prefix as username
+  email: config.auth.defaultAdmin.email,
+  name: config.auth.defaultAdmin.name,
+  role: 'admin',
 };
 
 // Hash admin password on startup
@@ -23,7 +26,7 @@ let ADMIN_PASSWORD_HASH = null;
 
 const initializeAuth = async () => {
   try {
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    const adminPassword = config.auth.defaultAdmin.password;
 
     // Warn if using default password
     if (adminPassword === 'admin123') {
@@ -31,7 +34,7 @@ const initializeAuth = async () => {
     }
 
     // Generate hash from environment variable password
-    ADMIN_PASSWORD_HASH = await bcrypt.hash(adminPassword, 10);
+    ADMIN_PASSWORD_HASH = await bcrypt.hash(adminPassword, config.auth.password.saltRounds);
     console.log('✓ Authentication system initialized');
   } catch (error) {
     console.error('Failed to initialize authentication:', error);
@@ -49,7 +52,7 @@ const authenticateToken = (req, res, next) => {
   if (!token) {
     return res.status(401).json({
       success: false,
-      message: 'Access token required'
+      message: 'Access token required',
     });
   }
 
@@ -57,7 +60,7 @@ const authenticateToken = (req, res, next) => {
     if (err) {
       return res.status(403).json({
         success: false,
-        message: 'Invalid or expired token'
+        message: 'Invalid or expired token',
       });
     }
 
@@ -74,10 +77,11 @@ const generateToken = (user) => {
     {
       id: user.id,
       username: user.username,
-      email: user.email
+      email: user.email,
+      role: user.role || 'tenant',
     },
     JWT_SECRET,
-    { expiresIn: process.env.SESSION_TIMEOUT || '24h' }
+    { expiresIn: config.auth.jwt.expiresIn }
   );
 };
 
@@ -85,8 +89,8 @@ const generateToken = (user) => {
  * Validate login credentials using bcrypt
  */
 const validateLogin = async (username, password) => {
-  // Check username match
-  if (username !== ADMIN_USER.username) {
+  // Check username match (support both username and email)
+  if (username !== ADMIN_USER.username && username !== ADMIN_USER.email) {
     return false;
   }
 
@@ -123,5 +127,5 @@ module.exports = {
   generateToken,
   validateLogin,
   verifyToken,
-  ADMIN_USER
+  ADMIN_USER,
 };
