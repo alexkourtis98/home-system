@@ -2,14 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
-const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const path = require('path');
 
-// Load configuration
+// Load configuration and logger
 const config = require('./src/config');
+const logger = require('./src/config/logger');
 const { sanitizeMiddleware } = require('./src/utils/sanitizer');
+const requestLogger = require('./src/middleware/requestLogger');
 
 // MongoDB Memory Server - optional (dev dependency)
 let MongoMemoryServer;
@@ -52,8 +53,8 @@ app.use(express.urlencoded({ extended: true, limit: config.app.bodyLimit }));
 // XSS protection - sanitize user input
 app.use(sanitizeMiddleware);
 
-// Logging middleware
-app.use(morgan(config.app.logFormat));
+// Request logging middleware (Winston)
+app.use(requestLogger);
 
 // Serve static files from dist directory
 app.use(express.static(path.join(__dirname, config.app.staticDir)));
@@ -65,6 +66,10 @@ const apiLimiter = rateLimit({
   message: config.security.rateLimit.message,
   standardHeaders: true,
   legacyHeaders: false,
+  handler: (req, res) => {
+    logger.warn('Rate limit exceeded', { ip: req.ip, url: req.originalUrl });
+    res.status(429).json({ message: config.security.rateLimit.message });
+  },
 });
 
 // API Routes (with rate limiting)
@@ -103,12 +108,13 @@ app.get('/payments', (req, res) => {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  logger.logError(err, req);
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
 // 404 handler
 app.use((req, res) => {
+  logger.warn('Route not found', { url: req.originalUrl, method: req.method });
   res.status(404).json({ message: 'Route not found' });
 });
 
@@ -120,22 +126,22 @@ const connectDB = async () => {
     // If no MongoDB URI is provided, use MongoDB Memory Server for development (if available)
     if (!mongoURI) {
       if (MongoMemoryServer && config.database.useMemoryServer) {
-        console.log('No MONGODB_URI found, starting MongoDB Memory Server...');
+        logger.info('No MONGODB_URI found, starting MongoDB Memory Server...');
         const mongod = await MongoMemoryServer.create();
         mongoURI = mongod.getUri();
-        console.log('MongoDB Memory Server started successfully');
+        logger.info('MongoDB Memory Server started successfully');
       } else {
-        console.error('No MONGODB_URI provided and MongoDB Memory Server not available');
-        console.error('Please set MONGODB_URI environment variable');
+        logger.error('No MONGODB_URI provided and MongoDB Memory Server not available');
+        logger.error('Please set MONGODB_URI environment variable');
         process.exit(1);
       }
     }
 
     await mongoose.connect(mongoURI, config.database.options);
-    console.log('MongoDB connected successfully');
-    console.log(`Database: ${mongoURI.includes('memory') ? 'In-Memory (Development)' : 'External MongoDB'}`);
+    logger.info('MongoDB connected successfully');
+    logger.info(`Database: ${mongoURI.includes('memory') ? 'In-Memory (Development)' : 'External MongoDB'}`);
   } catch (error) {
-    console.error('MongoDB connection error:', error);
+    logger.error('MongoDB connection error:', { error: error.message });
     process.exit(1);
   }
 };
@@ -154,16 +160,37 @@ const startServer = async () => {
 
     // Start HTTP server
     app.listen(config.app.port, () => {
-      console.log(`🏠 ${config.app.name} Server running on port ${config.app.port}`);
-      console.log(`📊 Dashboard: http://localhost:${config.app.port}/dashboard`);
-      console.log(`🔐 Authentication: Ready`);
-      console.log(`🌍 Environment: ${config.env}`);
+      logger.info(`${config.app.name} Server started`, {
+        port: config.app.port,
+        environment: config.env,
+        dashboard: `http://localhost:${config.app.port}/dashboard`,
+      });
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
+    logger.error('Failed to start server:', { error: error.message, stack: error.stack });
     process.exit(1);
   }
 };
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  logger.error('Uncaught Exception:', { error: error.message, stack: error.stack });
+  process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('Unhandled Rejection:', { reason, promise });
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  logger.info('SIGTERM received. Shutting down gracefully...');
+  mongoose.connection.close(false, () => {
+    logger.info('MongoDB connection closed.');
+    process.exit(0);
+  });
+});
 
 startServer();
 
